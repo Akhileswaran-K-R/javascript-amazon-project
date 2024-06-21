@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart,addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 
 let productsHTML = '';
@@ -60,51 +60,44 @@ let timeoutId;
 let prevId;
 
 document.querySelector('.js-products-grid')
-  .innerHTML=productsHTML;
+.innerHTML=productsHTML;
+
+
+function updateCartQuantity(){
+  let cartQuantity=0;
+  cart.forEach((cartItem) => {
+    cartQuantity+=cartItem.quantity;
+  });
+  
+  document.querySelector('.js-cart-quantity')
+  .innerHTML=cartQuantity;;
+}
+
+function displayAdded(productId){
+  if(prevId===productId){
+    clearTimeout(timeoutId);
+  }
+
+  const addSelector=document.querySelector(`.js-added-to-cart-${productId}`);
+
+  timeoutId=setTimeout(()=>{
+    addSelector.classList.remove('visible-added-to-cart');
+  },2000);
+
+  addSelector.classList.add('visible-added-to-cart');
+
+  prevId=productId;
+}
 
 document.querySelectorAll('.js-add-to-cart')
-  .forEach((button) => {
-    button.addEventListener('click', () => {
-      const {productId} = button.dataset;
-      let matchingItem;
+.forEach((button) => {
+  button.addEventListener('click', () => {
+    const {productId} = button.dataset;
 
-      cart.forEach((item) => {
-        if(productId === item.productId){
-          matchingItem=item;
-        }
-      });
-
-      const quantity=Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
-      if(matchingItem){
-        matchingItem.quantity+=quantity;
-      }else{
-        cart.push({
-          productId,
-          quantity
-        });
-      }
-
-      let cartQuantity=0;
-      cart.forEach((item) => {
-        cartQuantity+=item.quantity;
-      });
-
-      if(prevId===productId){
-        clearTimeout(timeoutId);
-      }
-
-      timeoutId=setTimeout(()=>{
-        document.querySelector(`.js-added-to-cart-${productId}`)
-          .classList.remove('visible-added-to-cart');
-      },2000);
-
-      document.querySelector(`.js-added-to-cart-${productId}`)
-          .classList.add('visible-added-to-cart');
-
-      prevId=productId;
-
-      document.querySelector('.js-cart-quantity')
-        .innerHTML=cartQuantity;
-    });
+    addToCart(productId);
+    updateCartQuantity();
+    displayAdded(productId);
+    
   });
+});
 
