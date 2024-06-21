@@ -55,9 +55,7 @@ products.forEach((product) => {
     </div>`;
 
 });
-
 let timeoutId;
-let prevId;
 
 document.querySelector('.js-products-grid')
 .innerHTML=productsHTML;
@@ -73,9 +71,9 @@ function updateCartQuantity(){
   .innerHTML=cartQuantity;;
 }
 
-function displayAdded(productId){
-  if(prevId===productId){
-    clearTimeout(timeoutId);
+function displayAdded(productId,addedTimeOutId=null){
+  if(addedTimeOutId){
+    clearTimeout(addedTimeOutId);
   }
 
   const addSelector=document.querySelector(`.js-added-to-cart-${productId}`);
@@ -85,18 +83,20 @@ function displayAdded(productId){
   },2000);
 
   addSelector.classList.add('visible-added-to-cart');
-
-  prevId=productId;
+ 
+  addedTimeOutId=timeoutId;
+  return addedTimeOutId;
 }
 
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button) => {
+  let addedTimeOutId;
   button.addEventListener('click', () => {
     const {productId} = button.dataset;
 
     addToCart(productId);
     updateCartQuantity();
-    displayAdded(productId);
+    addedTimeOutId=displayAdded(productId,addedTimeOutId);
     
   });
 });
