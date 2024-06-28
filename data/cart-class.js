@@ -6,10 +6,10 @@ class Cart {
 
   constructor(localStorageKey) {
     this.#localStorageKey = localStorageKey;
-    this.#loadFromStorage();
+    this.loadFromStorage();
   }
 
-  #loadFromStorage() {
+  loadFromStorage() {
     this.cartItems=JSON.parse(localStorage.getItem(this.#localStorageKey)) || [];
   }
 
@@ -66,7 +66,7 @@ class Cart {
         cartItem.quantity=newQuantity;
       }
     });
-    saveToStorage();
+    this.saveToStorage();
   }
 
   updateDeliveryOption(productId, deliveryOptionId){
@@ -87,12 +87,12 @@ class Cart {
   }
 }
 
-const cart=new Cart('cart-oop');
-const businessCart=new Cart('cart-business');
+export const cart=new Cart('cart-oop');
+//const businessCart=new Cart('cart-business');
 
 
 
-console.log(cart);
-console.log(businessCart);
+//console.log(cart);
+//console.log(businessCart);
 
-console.log(businessCart instanceof Cart);
+//console.log(businessCart instanceof Cart);
