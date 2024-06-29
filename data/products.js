@@ -86,8 +86,9 @@ export function loadProducts(fun){
         return new Clothing(productDetails);
       }else if(productDetails.type === 'appliance'){
         return new Appliance(productDetails);
+      }else{
+        return new Product(productDetails);
       }
-      return new Product(productDetails);
     });
     fun();
   });

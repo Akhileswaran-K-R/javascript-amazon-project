@@ -1,10 +1,18 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { cart } from "../../data/cart-class.js";
+import { loadProducts } from "../../data/products.js";
 
 const productId1= 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
-const productId2= 'id1';
+const productId2= '15b6fc6f-327a-4ec4-896f-486349e85a3d';
 
 describe('Test suite: renderOrderSummary', () => {
+
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();
+    });
+  });
+
   beforeEach(() => {
     spyOn(localStorage,'setItem');
 
@@ -49,7 +57,7 @@ describe('Test suite: renderOrderSummary', () => {
 
     expect(
       document.querySelector(`.js-product-name-${productId2}`).innerText
-    ).toEqual('Back pack');
+    ).toEqual('Intermediate Size Basketball');
 
     expect(
       document.querySelector(`.js-product-price-${productId1}`).innerText
@@ -57,7 +65,7 @@ describe('Test suite: renderOrderSummary', () => {
 
     expect(
       document.querySelector(`.js-product-price-${productId2}`).innerText
-    ).toEqual(`$14.00`);
+    ).toEqual(`$20.95`);
   });
 
   it('removes a product', () => {
@@ -96,7 +104,7 @@ describe('Test suite: renderOrderSummary', () => {
 
     expect(
       document.querySelector('.js-payment-summary-total').innerText
-    ).toEqual('$55.86');
+    ).toEqual('$63.50');
   });
 
   afterEach(() => {
