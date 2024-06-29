@@ -6,7 +6,15 @@ import { loadProductsFetch } from "../data/products.js";
 //import '../data/backend-practice.js';
 
 async function loadPage(){
-  await loadProductsFetch();           //await works only with promises
+  try{
+    //throw 'error1';
+    await loadProductsFetch();           //await works only with promises
+
+  } catch(error) {
+    console.log('Unexpected error. Please try again later'); 
+  }
+
+  
 
   renderCheckoutHeader();
   renderOrderSummary();
