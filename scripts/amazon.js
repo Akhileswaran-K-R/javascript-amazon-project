@@ -2,10 +2,10 @@ import {cart} from '../data/cart-class.js';
 import {products,loadProductsFetch} from '../data/products.js';
 
 loadProductsFetch().then(() => {
-  renderProductsGrid()
+  renderProductsGrid();
 });
 
-function renderProductsGrid(){
+export function renderProductsGrid(){
 
   let productsHTML = '';
   updateCartQuantity();

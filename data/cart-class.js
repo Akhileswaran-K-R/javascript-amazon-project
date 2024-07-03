@@ -17,7 +17,7 @@ class Cart {
     localStorage.setItem(this.#localStorageKey,JSON.stringify(this.cartItems));
   }
 
-  addToCart(productId) {
+  addToCart(productId,number=0) {
     let matchingItem;
   
     this.cartItems.forEach((cartItem) => {
@@ -27,7 +27,13 @@ class Cart {
     });
   
     const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
-    const quantity=Number(quantitySelector.value);
+
+    let quantity;
+    if(quantitySelector){
+      quantity=Number(quantitySelector.value);
+    }else{
+      quantity=Number(number);
+    }
   
     if(matchingItem){
       matchingItem.quantity+=quantity;
@@ -96,3 +102,9 @@ export const cart=new Cart('cart-oop');
 //console.log(businessCart);
 
 //console.log(businessCart instanceof Cart);
+
+export async function loadCartFetch(){
+  const response = await fetch('https://supersimplebackend.dev/cart');
+  const text = await response.text();
+  console.log(text);
+}
