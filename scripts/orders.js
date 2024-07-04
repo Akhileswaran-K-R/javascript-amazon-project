@@ -1,10 +1,12 @@
 import { cart} from "../data/cart-class.js";
 import { orders } from "../data/orders.js";
 import { getProduct, loadProductsFetch } from "../data/products.js";
+import { updateCartQuantity,loadHeader } from "./header.js";
 import { formatCurrency } from "./utils/money.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 let orderInnerHTML;
+loadHeader();
 renderOrderPage();
 
 export async function renderOrderPage(){
@@ -97,6 +99,7 @@ export async function renderOrderPage(){
       const {productId} = button.dataset;
       const {quantity} = button.dataset;
       cart.addToCart(productId,quantity);
+      updateCartQuantity();
 
       button.innerHTML='Added';
       setTimeout(() => {
