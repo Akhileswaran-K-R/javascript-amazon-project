@@ -1,11 +1,14 @@
 import {cart} from '../data/cart-class.js';
 import {products,loadProductsFetch} from '../data/products.js';
+import { loadHeader, updateCartQuantity } from './header/header.js';
+
+loadHeader();
 
 loadProductsFetch().then(() => {
   renderProductsGrid();
 });
 
-export function renderProductsGrid(){
+function renderProductsGrid(){
 
   let productsHTML = '';
   updateCartQuantity();
@@ -68,14 +71,6 @@ export function renderProductsGrid(){
 
   document.querySelector('.js-products-grid')
   .innerHTML=productsHTML;
-
-
-  function updateCartQuantity(){
-    let cartQuantity=cart.calculateCartQuantity();
-    
-    document.querySelector('.js-cart-quantity')
-    .innerHTML=cartQuantity;
-  }
 
   function displayAdded(productId,addedTimeOutId=null){
     if(addedTimeOutId){

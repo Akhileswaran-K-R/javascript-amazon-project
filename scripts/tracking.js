@@ -1,8 +1,9 @@
 import { getOrder, getOrderProduct } from "../data/orders.js";
 import { getProduct, loadProductsFetch } from "../data/products.js";
-import { loadHeader } from "./header.js";
+import { loadHeader, updateCartQuantity } from "./header/header.js";
 
 loadHeader();
+updateCartQuantity();
 loadPage();
 
 async function loadPage(){
