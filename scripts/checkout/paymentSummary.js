@@ -92,8 +92,7 @@ export function renderPaymentSummary(){
       console.log('Unexpected error. Try again later');
     }
 
-    localStorage.removeItem('cart-oop');
-    cart.cartItems=[];
+    cart.resetCart();
     window.location.href = 'orders.html';
   });
 }

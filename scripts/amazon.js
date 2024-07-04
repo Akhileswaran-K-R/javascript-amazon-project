@@ -88,13 +88,14 @@ function renderProductsGrid(){
 
   });
   let timeoutId;
+  const productGrid = document.querySelector('.js-products-grid');
 
   if(productsHTML){
-    document.querySelector('.js-products-grid')
-    .innerHTML=productsHTML;
+    productGrid.classList.remove('no-search');
+    productGrid.innerHTML=productsHTML;
   }else{
-    document.querySelector('.js-products-grid')
-    .innerHTML = 'No matches found';
+    productGrid.classList.add('no-search');
+    productGrid.innerHTML = 'No matches found';
   }
   
 
