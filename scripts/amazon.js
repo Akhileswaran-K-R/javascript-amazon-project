@@ -13,7 +13,27 @@ function renderProductsGrid(){
   let productsHTML = '';
   updateCartQuantity();
 
-  products.forEach((product) => {
+  let filterProducts = products;
+  const url = new URL(window.location.href);
+  let search = url.searchParams.get('search');
+
+  if(search){
+    search=search.toLowerCase();
+
+    filterProducts = products.filter((product) => {
+      let matchingKeyword;
+
+      product.keywords.forEach((keyword) => {
+        if(keyword.toLowerCase().includes(search)){
+          matchingKeyword = true;
+        }
+      });
+
+      return matchingKeyword || product.name.toLowerCase().includes(search);
+    });
+  }
+
+  filterProducts.forEach((product) => {
     productsHTML +=`
       <div class="product-container">
         <div class="product-image-container">
@@ -69,8 +89,14 @@ function renderProductsGrid(){
   });
   let timeoutId;
 
-  document.querySelector('.js-products-grid')
-  .innerHTML=productsHTML;
+  if(productsHTML){
+    document.querySelector('.js-products-grid')
+    .innerHTML=productsHTML;
+  }else{
+    document.querySelector('.js-products-grid')
+    .innerHTML = 'No matches found';
+  }
+  
 
   function displayAdded(productId,addedTimeOutId=null){
     if(addedTimeOutId){
