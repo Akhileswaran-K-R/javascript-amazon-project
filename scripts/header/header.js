@@ -37,9 +37,7 @@ export function loadHeader(){
   .innerHTML = headerInnerHTML;
 
   document.querySelector('.js-search-button')
-  .addEventListener('click',() => {
-    changeScreen();
-  });
+  .addEventListener('click',changeScreen);
 
   document.querySelector('.js-search-bar')
   .addEventListener('keydown', (event) => {
